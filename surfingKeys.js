@@ -109,10 +109,15 @@ mapkey('\\c',  "Collapse comment (Reddit)",                    redditCollapseCom
 mapkey('\\c',  "Collapse comment (HN)",                        hnCollapseComment,     rid(/(news\.ycombinator\.com)/i));
 mapkey('\\v',  "Cast vote (Reddit)",                           redditVote,            rid(/(reddit\.com)/i));
 mapkey('\\v',  "Cast vote (HN)",                               hnVote,                rid(/(news\.ycombinator\.com)/i));
-mapkey('\\m',  "strip highlights and ending url",              matchDotCom,           rid(/(match\.com)/i));
+mapkey('\\m',  "Strip highlights and ending url",              matchDotCom,           rid(/(match\.com)/i));
+mapkey('\\x',  "Close the current tab",                        closeWin);
 
 
 //---- Functions ----//
+
+function closeWin() {
+    window.close();
+}
 
 function matchDotCom() {
     var url = window.location.href;
@@ -141,10 +146,10 @@ function ghToggleStar() {
   });
 
   var action = "starred";
-  var star = "Γÿà";
+  var star = "?";
   if ($(cur).attr("class").indexOf("unstarred") === -1) {
     action = "un" + action;
-    star = "Γÿå";
+    star = "?";
   }
 
   $(cur).find("button").click();
@@ -154,9 +159,9 @@ function ghToggleStar() {
 function glToggleStar() {
   var repo = window.location.pathname.slice(1).split("/").slice(0,2).join("/");
   var action = $('.btn.star-btn > span').click().text().toLowerCase() + "red";
-  var star = "Γÿå";
+  var star = "?";
   if (action === "starred") {
-    star = "Γÿà";
+    star = "?";
   }
   Front.showBanner(star + " Repository " + repo + " " + action);
 }
@@ -509,8 +514,8 @@ var search = [
         Omnibar.listResults(res.results, function(s) {
           var meta = ""
             , repo = s.repo_name;
-          meta += "[Γÿà" + s.star_count + "] ";
-          meta += "[Γåô" + s.pull_count + "] ";
+          meta += "[?" + s.star_count + "] ";
+          meta += "[?" + s.pull_count + "] ";
           if (repo.indexOf("/") === -1) {
             repo = "_/" + repo;
           }
@@ -553,7 +558,7 @@ var search = [
             var id        = "#sk-domain-" + s.domain.replace('.', '-')
               , available = s.summary === "inactive"
               , color     = available ? "#23b000" : "#ff4d00"
-              , symbol    = available ? "Γ£ö " : "Γ£ÿ ";
+              , symbol    = available ? "? " : "? ";
             $(id).text(symbol + $(id).text()).css("color", color);
           });
         });
@@ -619,7 +624,7 @@ var search = [
             hash = fname + '/' + fary;
           })();
 
-          var moduleName = s.title.split(' ΓÇô')[0];
+          var moduleName = s.title.split(' –')[0];
 
           var subtitle = "";
           if (hash) {
@@ -649,10 +654,10 @@ var search = [
         Omnibar.listResults(res, function(s) {
           var prefix = "";
           if (s.import_count) {
-            prefix += "[Γåô" + s.import_count + "] ";
+            prefix += "[?" + s.import_count + "] ";
           }
           if (s.stars) {
-            prefix += "[Γÿà" + s.stars + "] ";
+            prefix += "[?" + s.stars + "] ";
           }
           return Omnibar.createURLItem({
             title: prefix + s.path,
@@ -670,7 +675,7 @@ var search = [
         Omnibar.listResults(res, function(s) {
           var prefix = "";
           if (s.stargazers_count) {
-            prefix += "[Γÿà" + s.stargazers_count + "] ";
+            prefix += "[?" + s.stargazers_count + "] ";
           }
           return Omnibar.createURLItem({
             title: prefix + s.full_name,
@@ -724,7 +729,7 @@ var search = [
             , desc   = ""
             , liscs  = "";
           if (s.downloads && s.downloads.all) {
-            dls = "[Γåô" + s.downloads.all + "]";
+            dls = "[?" + s.downloads.all + "]";
           }
           if(s.meta) {
             if (s.meta.description) {
@@ -758,10 +763,10 @@ var search = [
             var title = "";
             var prefix = "";
             if (s.points) {
-              prefix += "[Γåæ" + s.points + "] ";
+              prefix += "[?" + s.points + "] ";
             }
             if (s.num_comments) {
-              prefix += "[Γå▓" + s.num_comments + "] ";
+              prefix += "[?" + s.num_comments + "] ";
             }
             switch(s._tags[0]) {
               case "story":
@@ -815,7 +820,7 @@ var search = [
             , desc   = ""
             , liscs  = "";
           if (s.downloads && s.downloads.all) {
-            dls = "[Γåô" + s.downloads.all + "] ";
+            dls = "[?" + s.downloads.all + "] ";
           }
           if(s.meta) {
             if (s.meta.description) {
@@ -862,7 +867,7 @@ var search = [
         Omnibar.listResults(res.documents, function(s) {
           var excerpt = s.excerpt;
           if(excerpt.length > 240) {
-            excerpt = excerpt.slice(0, 240) + 'ΓÇª';
+            excerpt = excerpt.slice(0, 240) + '…';
           }
           res.query.split(" ").forEach(function(q) {
             excerpt = excerpt.replace(new RegExp(q, 'gi'), "<strong>$&</strong>");
@@ -895,12 +900,12 @@ var search = [
           if(s.score) {
             if (s.score.final) {
                 score = Math.round(s.score.final * 5);
-                stars = "Γÿà".repeat(score) + "Γÿå".repeat(5-score);
+                stars = "?".repeat(score) + "?".repeat(5-score);
             }
           }
           if (s.flags) {
             Object.keys(s.flags).forEach(function(f) {
-              flags += "[<span style='color:#ff4d00'>ΓÜæ</span> " + f + "] ";
+              flags += "[<span style='color:#ff4d00'>?</span> " + f + "] ";
             });
           }
           var li = $('<li/>').html(`
@@ -997,7 +1002,7 @@ var search = [
               });
             case "youtube#video":
               return Omnibar.createURLItem({
-                title: " Γû╢ " + s.snippet.title,
+                title: " ? " + s.snippet.title,
                 url:   "https://youtu.be/" + s.id.videoId
               });
           }
@@ -1035,10 +1040,10 @@ function ghToggleStar() {
   });
 
   var action = "starred";
-  var star = "Γÿà";
+  var star = "?";
   if ($(cur).attr("class").indexOf("unstarred") === -1) {
     action = "un" + action;
-    star = "Γÿå";
+    star = "?";
   }
 
   $(cur).find("button").click();
@@ -1048,9 +1053,9 @@ function ghToggleStar() {
 function glToggleStar() {
   var repo = window.location.pathname.slice(1).split("/").slice(0,2).join("/");
   var action = $('.btn.star-btn > span').click().text().toLowerCase() + "red";
-  var star = "Γÿå";
+  var star = "?";
   if (action === "starred") {
-    star = "Γÿà";
+    star = "?";
   }
   Front.showBanner(star + " Repository " + repo + " " + action);
 }
