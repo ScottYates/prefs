@@ -110,7 +110,7 @@ mapkey('\\c',  "Collapse comment (HN)",                        hnCollapseComment
 mapkey('\\v',  "Cast vote (Reddit)",                           redditVote,            rid(/(reddit\.com)/i));
 mapkey('\\v',  "Cast vote (HN)",                               hnVote,                rid(/(news\.ycombinator\.com)/i));
 mapkey('\\m',  "Strip highlights and ending url",              matchDotCom,           rid(/(match\.com)/i));
-mapkey('\\x',  "Close the current tab",                        closeWin);
+mapkey('\\x',  "Close the current tab",                        closeWin,              rid());
 
 
 //---- Functions ----//
