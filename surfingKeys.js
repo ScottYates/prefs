@@ -63,6 +63,8 @@ unmap('ZZ');
 unmap('<Ctrl-Alt-d>');
 unmap('x');
 
+mapkey('<Ctrl-`>', '#3Go to next tab', 'RUNTIME("nextTab")');
+
 settings.blacklistPattern = /.*mail.google.com.*|.*inbox.google.com.*|trello.com/i;
 settings.smartPageBoundary = false;
 
