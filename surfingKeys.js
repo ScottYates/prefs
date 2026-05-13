@@ -63,7 +63,13 @@ unmap('ZZ');
 unmap('<Ctrl-Alt-d>');
 unmap('x');
 
-mapkey('<Ctrl-`>', '#3Go to next tab', 'RUNTIME("nextTab")');
+// Unmap Ctrl+` if it has a default binding
+api.unmap('<Ctrl-`>');
+
+// Map Ctrl+` to cycle through tabs with wrap-around
+api.mapkey('<Ctrl-`>', '#1Go to next tab (cycles)', function() {
+    Runtime.nextTab();
+}, {repeatIgnore: true});
 
 settings.blacklistPattern = /.*mail.google.com.*|.*inbox.google.com.*|trello.com/i;
 settings.smartPageBoundary = false;
