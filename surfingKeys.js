@@ -19,6 +19,8 @@ const {
     RUNTIME
 } = api;
 
+api.unmap('<Ctrl-`>');
+
 mapkey('<Ctrl-`>', 'Kill Stickies', function() {
     document.querySelectorAll("body *").forEach(function(node) {
         if (["fixed", "sticky"].includes(getComputedStyle(node).position)) {
@@ -64,12 +66,12 @@ unmap('<Ctrl-Alt-d>');
 unmap('x');
 
 // Unmap Ctrl+` if it has a default binding
-api.unmap('<Ctrl-`>');
+//api.unmap('<Ctrl-`>');
 
 // Map Ctrl+` to cycle through tabs with wrap-around
-api.mapkey('<Ctrl-`>', '#1Go to next tab (cycles)', function() {
-    Runtime.nextTab();
-}, {repeatIgnore: true});
+// api.mapkey('<Ctrl-`>', '#1Go to next tab (cycles)', function() {
+//     Runtime.nextTab();
+// }, {repeatIgnore: true});
 
 settings.blacklistPattern = /.*mail.google.com.*|.*inbox.google.com.*|trello.com/i;
 settings.smartPageBoundary = false;
