@@ -99,6 +99,7 @@ settings.theme = '\
     background: #f0f0f0; \
 }';
 
+api.unmap('<Space>');
 
 // Helper function to generate mapkey opts
 function rid(d) { return { repeatIgnore: true, domain: d }; }
